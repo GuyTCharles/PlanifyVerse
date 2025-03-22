@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PlanifyVerse_AI-Powered Study Plans Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>PlanifyVerse</h1>
+        <div class="toggleClass" onclick="toggleTheme()">
+            <div class="toggleCircle"></div>
+            <span class="toggleText" id="toggleText">Light Mode</span>
+        </div>
+    </header>
+
+    <main>
+        <p class="welcome-text">
+            Welcome to PlanifyVerse, where you build your AI-powered study plans
+        </p>
+        <form id="studyPlanForm">
+            <div>
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" placeholder="e.g., Mathematics" required>
+            </div>
+            <div>
+                <label for="time">Available Hours per Day:</label>
+                <input type="number" id="time" name="time" placeholder="e.g., 2" required>
+            </div>
+            <div>
+                <label for="goal">Learning Goal:</label>
+                <input type="text" id="goal" name="goal" placeholder="e.g., Improve problem-solving skills">
+            </div>
+            <button type="submit">Generate Study Plan</button>
+        </form>
+        <div id="studyPlanResult"></div>
+    </main>
+    <footer>
+        &copy; 2025 PlanifyVerse
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
