@@ -1,10 +1,14 @@
+import os
+import openai
 from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
+openai.api_key = os.environ.get("DEEPSEEK_API_TOKEN")
+openai.api_base = "https://api.deepseek.com"
+
 @app.route('/')
 def index():
-    # Render the HTML file from the templates folder
     return render_template('planify-verse.html')
 
 @app.route('/generateStudyPlan', methods=['POST'])
@@ -14,9 +18,24 @@ def generate_study_plan():
     time = data.get('time')
     goal = data.get('goal')
 
-    # Dummy study plan response
-    plan = f"Study {subject} for {time} hours per day to achieve your goal: {goal}."
-    return jsonify({'plan': plan})
+    prompt = (
+        f"Generate a detailed study plan for '{subject}' with {time} hours/day to improve {goal}."
+    )
+
+    try:
+        # New 1.x style call might differ; this is just a placeholder
+        response = openai.Chat.create(
+            model="deepseek-chat",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ]
+        )
+        generated_plan = response.choices[0].message.content.strip()
+    except Exception as e:
+        generated_plan = f"Error generating study plan: {str(e)}"
+
+    return jsonify({'plan': generated_plan})
 
 if __name__ == '__main__':
     app.run(debug=True)
