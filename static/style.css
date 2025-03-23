@@ -41,14 +41,12 @@ header {
     align-items: center;
     padding: 1rem 2rem;
     background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
-    border-top: 0.5px solid rgba(0, 0, 0, 0.2);
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 body.dark header {
     background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
-    border-top: 0.5px solid rgba(255, 255, 255, 0.2);
     border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
@@ -136,6 +134,10 @@ body.dark .toggleText {
 @media (max-width: 450px) {
     header {
         padding: 0.5rem;
+    }
+
+    footer {
+        padding: 0.8rem !important;
     }
 }
 
@@ -243,13 +245,11 @@ footer {
     padding: 1rem 2rem;
     background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
     border-top: 0.5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
 body.dark footer {
     background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
     border-top: 0.5px solid rgba(255, 255, 255, 0.2);
-    border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
 }
