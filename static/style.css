@@ -253,3 +253,52 @@ body.dark footer {
     border-top: 0.5px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
 }
+
+/* Result / Feedback Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 999; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #ffffff;
+  margin: 5% auto; /* 5% from the top, centered horizontally */
+  padding: 2rem;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 700px; 
+  position: relative; /* For close button positioning */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Close Button (X) */
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+.plan-result {
+  /* You can preserve pre-wrap if you want bullet points, etc. */
+  white-space: pre-wrap; 
+  line-height: 1.5;
+  margin-top: 1rem;
+}

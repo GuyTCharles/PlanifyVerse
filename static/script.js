@@ -35,6 +35,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Attach PDF download handler
   document.getElementById('downloadPdfBtn').addEventListener('click', handleDownloadPdf);
+
+  // Attach modal close button
+  const modal = document.getElementById('studyPlanModal');
+  const closeBtn = document.querySelector('.close');
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // If user clicks anywhere outside the modal, close it
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
 });
 
 // ===========================
@@ -49,15 +63,16 @@ function handleFormSubmit(event) {
   const goal = document.getElementById('goal').value;
 
   // Elements for feedback
-  const resultDiv = document.getElementById('studyPlanResult');
   const spinner = document.getElementById('loadingSpinner');
   const downloadBtn = document.getElementById('downloadPdfBtn');
+  const modal = document.getElementById('studyPlanModal');
+  const planResultDiv = document.getElementById('studyPlanResult');
 
   // Reset/hide elements before making the request
-  resultDiv.style.display = 'none';      // Hide the study plan container
-  resultDiv.innerHTML = '';             // Clear old results
-  downloadBtn.style.display = 'none';   // Hide the PDF button
-  spinner.classList.remove('hidden');   // Show the spinner
+  planResultDiv.innerHTML = '';        // Clear old results
+  downloadBtn.style.display = 'none';  // Hide the PDF button
+  modal.style.display = 'none';        // Ensure modal is hidden initially
+  spinner.classList.remove('hidden');  // Show the spinner
 
   // Make the fetch request
   fetch('/generateStudyPlan', {
@@ -75,29 +90,23 @@ function handleFormSubmit(event) {
     // Hide the spinner once the request completes successfully
     spinner.classList.add('hidden');
   
-    // Reveal the study plan container and display the plan
-    resultDiv.style.display = 'block';
-    resultDiv.innerHTML = `
-      <h2>Your Study Plan</h2>
-      <p>${data.plan}</p>
-    `;
-  
+    // Insert the generated plan into the planResultDiv
+    planResultDiv.innerHTML = `Your Study Plan\n${data.plan}`;
+
+    // Show the modal
+    modal.style.display = 'block';
+
     // Show the PDF download button
     downloadBtn.style.display = 'block';
   })
   .catch(error => {
-    // Hide the spinner if there's an error
     spinner.classList.add('hidden');
-  
     console.error('Error:', error);
-  
-    // Reveal the study plan container and show the error message
-    resultDiv.style.display = 'block';
-    resultDiv.innerHTML = `
-      <p style="color: #ff4444; font-weight: bold;">
-        Error generating study plan. Please try again later.
-      </p>
+
+    planResultDiv.innerHTML = `
+      Error generating study plan. Please try again later.
     `;
+    modal.style.display = 'block';
   });
 }
 
@@ -106,19 +115,15 @@ function handleFormSubmit(event) {
 // =================================
 function handleDownloadPdf() {
   const { jsPDF } = window.jspdf;
-  // Create a new PDF document with letter size and points as units
+  // Create a new PDF doc with letter size
   const doc = new jsPDF({ unit: 'pt', format: 'letter' });
   
-  // Retrieve the full text from the study plan container.
-  // Ensure your study plan HTML preserves line breaks (use white-space: pre-wrap in CSS).
+  // Retrieve text from the studyPlanResult
   const planText = document.getElementById('studyPlanResult').innerText;
-  
-  // Use splitTextToSize to wrap the text to a max width of 500pt
+
+  // Wrap text at 500pt
   const lines = doc.splitTextToSize(planText, 500);
-  
-  // Add the text to the PDF starting at position (50, 50)
+
   doc.text(lines, 50, 50);
-  
-  // Save the PDF file
   doc.save('study-plan.pdf');
 }
