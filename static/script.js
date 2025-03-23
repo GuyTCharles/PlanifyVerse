@@ -1,4 +1,6 @@
-// Apply the specified theme: "light" removes the dark class (default light mode), "dark" adds it.
+// ===========================
+// Theme Toggling
+// ===========================
 function setTheme(theme) {
   const toggleText = document.getElementById('toggleText');
   if (theme === 'light') {
@@ -10,7 +12,6 @@ function setTheme(theme) {
   }
 }
 
-// Toggle between light and dark themes and save the choice in localStorage.
 function toggleTheme() {
   if (document.body.classList.contains('dark')) {
     setTheme('light');
@@ -21,40 +22,99 @@ function toggleTheme() {
   }
 }
 
-// On page load, apply the saved theme (defaulting to light mode if none is saved).
-document.addEventListener("DOMContentLoaded", function() {
+// =============================================
+// DOMContentLoaded: Set theme and attach events
+// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Apply saved theme (default to light)
   const savedTheme = localStorage.getItem('theme') || 'light';
   setTheme(savedTheme);
+
+  // Attach form submission handler
+  document.getElementById('studyPlanForm').addEventListener('submit', handleFormSubmit);
+
+  // Attach PDF download handler
+  document.getElementById('downloadPdfBtn').addEventListener('click', handleDownloadPdf);
 });
 
-// Handle study plan form submission
-document.getElementById('studyPlanForm').addEventListener('submit', function(event) {
+// ===========================
+// Form Submission Handling
+// ===========================
+function handleFormSubmit(event) {
   event.preventDefault();
 
-  // Get input values
+  // Retrieve form values
   const subject = document.getElementById('subject').value;
   const time = document.getElementById('time').value;
   const goal = document.getElementById('goal').value;
 
-  // Show a loading message
+  // Elements for feedback
   const resultDiv = document.getElementById('studyPlanResult');
-  resultDiv.innerHTML = '<p>Generating your study plan...</p>';
+  const spinner = document.getElementById('loadingSpinner');
+  const downloadBtn = document.getElementById('downloadPdfBtn');
 
-  // Make a POST request to the backend API (replace URL with your actual endpoint)
-  fetch('https://your-backend-api.com/generateStudyPlan', {
+  // Reset/hide elements before making the request
+  resultDiv.style.display = 'none';      // Hide the study plan container
+  resultDiv.innerHTML = '';             // Clear old results
+  downloadBtn.style.display = 'none';   // Hide the PDF button
+  spinner.classList.remove('hidden');   // Show the spinner
+
+  // Make the fetch request
+  fetch('/generateStudyPlan', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ subject, time, goal })
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not OK');
+    }
+    return response.json();
+  })
   .then(data => {
-    // Display the study plan
-    resultDiv.innerHTML = `<h2>Your Study Plan</h2><p>${data.plan}</p>`;
+    // Hide the spinner once the request completes successfully
+    spinner.classList.add('hidden');
+  
+    // Reveal the study plan container and display the plan
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+      <h2>Your Study Plan</h2>
+      <p>${data.plan}</p>
+    `;
+  
+    // Show the PDF download button
+    downloadBtn.style.display = 'block';
   })
   .catch(error => {
+    // Hide the spinner if there's an error
+    spinner.classList.add('hidden');
+  
     console.error('Error:', error);
-    resultDiv.innerHTML = '<p>Error generating study plan. Please try again later.</p>';
+  
+    // Reveal the study plan container and show the error message
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+      <p style="color: #ff4444; font-weight: bold;">
+        Error generating study plan. Please try again later.
+      </p>
+    `;
   });
-});
+}
+
+// =================================
+// PDF Download Handling using jsPDF
+// =================================
+function handleDownloadPdf() {
+  // Ensure jsPDF is loaded (include it via a CDN in your HTML)
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Get the text content from the study plan result
+  const planText = document.getElementById('studyPlanResult').innerText;
+
+  // Add the text to the PDF document, starting at x=10, y=10
+  doc.text(planText, 10, 10);
+
+  // Save/download the PDF file
+  doc.save('study-plan.pdf');
+}

@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "Welcome to PlanifyVerse!"
+    # Render the HTML file from the templates folder
+    return render_template('planify-verse.html')
 
 @app.route('/generateStudyPlan', methods=['POST'])
 def generate_study_plan():

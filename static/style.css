@@ -28,6 +28,7 @@ body.dark {
     /* Light text color for dark mode */
 }
 
+/* Light-mode main background */
 body:not(.dark) main {
     background-color: #F5FBFF;
 }
@@ -71,19 +72,18 @@ main {
     font-weight: bold;
     text-align: center;
     background: linear-gradient(90deg, #007acc, #00d4ff);
-    /* Standard property (not fully supported in all browsers yet) */
-    background-clip: text;
-    /* WebKit-specific property for gradient text */
-    -webkit-background-clip: text;
-    color: transparent;
+    -webkit-background-clip: text;  /* WebKit-specific property for gradient text */
+    background-clip: text; /* Standard property (not fully supported in all browsers yet) */
     -webkit-text-fill-color: transparent;
-    /* Subtle text shadow for better readability (lower opacity) */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+    color: transparent;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+    /* Subtle text shadow for readability */
     letter-spacing: 1px;
     margin: 1rem auto;
     margin-bottom: 1.8rem;
 }
 
+/* Fade-in Animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -172,6 +172,62 @@ body.dark .toggleText {
 
 #studyPlanForm button:hover {
     background: #007acc;
+}
+
+/* Spinner (centered in main) */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #ccc;
+    border-top-color: #0099ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Plan Result & PDF Button */
+#studyPlanResult {
+    display: none;
+    max-width: 500px;
+    margin: 1rem auto;
+    margin-top: 2.5rem;
+    padding: 1rem;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px 3px rgba(0, 0, 0, 0.1);
+}
+
+body.dark #studyPlanResult {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* New: Download PDF Button */
+#downloadPdfBtn {
+    display: none;
+    /* Hide by default; show it once a plan is generated */
+    margin: 1rem auto;
+    padding: 0.7rem;
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#downloadPdfBtn:hover {
+    background: #45a049;
 }
 
 /* Creative Footer Styles (Mirroring the Header) */
