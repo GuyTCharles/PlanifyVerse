@@ -132,6 +132,13 @@ body.dark .toggleText {
     color: #d1dae3;
 }
 
+/* MEDIA QUERY: For screens 450px wide or smaller */
+@media (max-width: 450px) {
+    header {
+        padding: 0.5rem;
+    }
+}
+
 /* Study Plan Form Styles */
 #studyPlanForm {
     max-width: 500px;
