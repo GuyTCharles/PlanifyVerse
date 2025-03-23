@@ -4,8 +4,8 @@ from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
-openai.api_key = os.environ.get("DEEPSEEK_API_TOKEN")
-openai.api_base = "https://api.deepseek.com"
+# TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(base_url="https://api.deepseek.com")'
+# openai.api_base = "https://api.deepseek.com"
 
 @app.route('/')
 def index():
