@@ -105,16 +105,20 @@ function handleFormSubmit(event) {
 // PDF Download Handling using jsPDF
 // =================================
 function handleDownloadPdf() {
-  // Ensure jsPDF is loaded (include it via a CDN in your HTML)
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  // Get the text content from the study plan result
+  // Create a new PDF document with letter size and points as units
+  const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+  
+  // Retrieve the full text from the study plan container.
+  // Ensure your study plan HTML preserves line breaks (use white-space: pre-wrap in CSS).
   const planText = document.getElementById('studyPlanResult').innerText;
-
-  // Add the text to the PDF document, starting at x=10, y=10
-  doc.text(planText, 10, 10);
-
-  // Save/download the PDF file
+  
+  // Use splitTextToSize to wrap the text to a max width of 500pt
+  const lines = doc.splitTextToSize(planText, 500);
+  
+  // Add the text to the PDF starting at position (50, 50)
+  doc.text(lines, 50, 50);
+  
+  // Save the PDF file
   doc.save('study-plan.pdf');
 }

@@ -4,8 +4,13 @@ from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
-# TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(base_url="https://api.deepseek.com")'
-# openai.api_base = "https://api.deepseek.com"
+# Retrieve your OpenAI API key from an environment variable
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise ValueError("OPENAI_API_KEY not set. Please set your API key as an environment variable.")
+
+# Configure the OpenAI client (default api_base is https://api.openai.com)
+openai.api_key = OPENAI_API_KEY
 
 @app.route('/')
 def index():
@@ -18,18 +23,22 @@ def generate_study_plan():
     time = data.get('time')
     goal = data.get('goal')
 
+    # Build a prompt for generating a study plan
     prompt = (
-        f"Generate a detailed study plan for '{subject}' with {time} hours/day to improve {goal}."
+        f"Generate a detailed study plan for the subject '{subject}' where the student studies "
+        f"for {time} hours per day and aims to improve '{goal}'. Provide a clear, structured plan "
+        "with specific tasks and a timeline."
     )
 
     try:
-        # New 1.x style call might differ; this is just a placeholder
-        response = openai.Chat.create(
-            model="deepseek-chat",
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "system", "content": "You are a helpful assistant that generates study plans."},
                 {"role": "user", "content": prompt}
-            ]
+            ],
+            temperature=0.7,
+            max_tokens=300
         )
         generated_plan = response.choices[0].message.content.strip()
     except Exception as e:
