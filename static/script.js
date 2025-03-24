@@ -36,14 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Attach PDF download handler
   document.getElementById('downloadPdfBtn').addEventListener('click', handleDownloadPdf);
 
-  // Attach modal close button
+  // Modal elements
   const modal = document.getElementById('studyPlanModal');
-  const closeBtn = document.querySelector('.close');
+  const closeBtn = document.querySelector('.modal .close');
+
+  // Close modal when the close button is clicked
   closeBtn.addEventListener('click', () => {
     modal.style.display = 'none';
   });
 
-  // If user clicks anywhere outside the modal, close it
+  // Close modal when clicking outside the modal content
   window.addEventListener('click', (event) => {
     if (event.target === modal) {
       modal.style.display = 'none';
@@ -91,21 +93,20 @@ function handleFormSubmit(event) {
     spinner.classList.add('hidden');
   
     // Insert the generated plan into the planResultDiv
-    planResultDiv.innerHTML = `Your Study Plan\n${data.plan}`;
-
-    // Show the modal
+    planResultDiv.innerText = data.plan;  // Using innerText preserves line breaks from pre-wrap
+  
+    // Show the modal containing the study plan
     modal.style.display = 'block';
-
+  
     // Show the PDF download button
     downloadBtn.style.display = 'block';
   })
   .catch(error => {
     spinner.classList.add('hidden');
     console.error('Error:', error);
-
-    planResultDiv.innerHTML = `
+    planResultDiv.innerHTML = `<p style="color: #ff4444; font-weight: bold;">
       Error generating study plan. Please try again later.
-    `;
+    </p>`;
     modal.style.display = 'block';
   });
 }
@@ -115,15 +116,17 @@ function handleFormSubmit(event) {
 // =================================
 function handleDownloadPdf() {
   const { jsPDF } = window.jspdf;
-  // Create a new PDF doc with letter size
   const doc = new jsPDF({ unit: 'pt', format: 'letter' });
   
   // Retrieve text from the studyPlanResult
   const planText = document.getElementById('studyPlanResult').innerText;
-
-  // Wrap text at 500pt
+  
+  // Wrap the text so it fits within a 500pt width
   const lines = doc.splitTextToSize(planText, 500);
-
+  
+  // Add the text to the PDF starting at x=50, y=50
   doc.text(lines, 50, 50);
+  
+  // Save the PDF file
   doc.save('study-plan.pdf');
 }

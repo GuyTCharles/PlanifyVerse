@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PlanifyVerse – AI-Powered Study Plans</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PlanifyVerse – AI-Powered Study Plans</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
-    <header>
-        <h1>PlanifyVerse</h1>
-        <div class="toggleClass" onclick="toggleTheme()">
-            <div class="toggleCircle"></div>
-            <span class="toggleText" id="toggleText">Light Mode</span>
-        </div>
-    </header>
+  <header>
+    <h1>PlanifyVerse</h1>
+    <div class="toggleClass" onclick="toggleTheme()">
+      <div class="toggleCircle"></div>
+      <span class="toggleText" id="toggleText">Light Mode</span>
+    </div>
+  </header>
 
-    <main>
-        <p class="welcome-text">Welcome to PlanifyVerse, where you build your AI-powered study plans</p>
+  <main>
+    <p class="welcome-text">Welcome to PlanifyVerse, where you build your AI-powered study plans</p>
+    
+    <!-- Study Plan Form -->
+    <form id="studyPlanForm" class="study-plan-form">
+      <div class="form-group">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" placeholder="e.g., Mathematics" required>
+      </div>
+      <div class="form-group">
+        <label for="time">Available Hours per Day:</label>
+        <input type="number" id="time" name="time" placeholder="e.g., 2" required>
+      </div>
+      <div class="form-group">
+        <label for="goal">Learning Goal:</label>
+        <input type="text" id="goal" name="goal" placeholder="e.g., Improve problem-solving skills">
+      </div>
+      <button type="submit">Generate Study Plan</button>
+    </form>
 
-        <!-- Study Plan Form -->
-        <form id="studyPlanForm" class="study-plan-form">
-            <div class="form-group">
-                <label for="subject">Subject:</label>
-                <input type="text" id="subject" name="subject" placeholder="e.g., Mathematics" required>
-            </div>
-            <div class="form-group">
-                <label for="time">Available Hours per Day:</label>
-                <input type="number" id="time" name="time" placeholder="e.g., 2" required>
-            </div>
-            <div class="form-group">
-                <label for="goal">Learning Goal:</label>
-                <input type="text" id="goal" name="goal" placeholder="e.g., Improve problem-solving skills">
-            </div>
-            <button type="submit">Generate Study Plan</button>
-        </form>
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="spinner hidden"></div>
 
-        <!-- Loading Spinner -->
-        <div id="loadingSpinner" class="spinner hidden"></div>
+    <!-- PDF download button -->
+    <button id="downloadPdfBtn">Download PDF</button>
 
-        <!-- PDF download button -->
-        <button id="downloadPdfBtn">Download PDF</button>
+    <!-- Modal for displaying the study plan -->
+    <div id="studyPlanModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <!-- This div will display the study plan -->
+        <div id="studyPlanResult" class="plan-result"></div>
+      </div>
+    </div>
+  </main>
 
-        <!-- Result / Feedback Modal -->
-        <div id="studyPlanModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div id="studyPlanResult" class="plan-result"></div>
-            </div>
-        </div>
-    </main>
+  <footer>
+    &copy; 2025 PlanifyVerse
+  </footer>
 
-    <footer>
-        &copy; 2025 PlanifyVerse
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <!-- Load jsPDF library -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <!-- Load your custom JavaScript -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
 </html>

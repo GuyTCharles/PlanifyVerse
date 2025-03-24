@@ -23,22 +23,30 @@ def generate_study_plan():
     time = data.get('time')
     goal = data.get('goal')
 
-    # Build a prompt for generating a study plan
+    # Updated prompt: explicitly instruct to leave an extra blank line between each week
     prompt = (
-        f"Generate a detailed study plan for the subject '{subject}' where the student studies "
-        f"for {time} hours per day and aims to improve '{goal}'. Provide a clear, structured plan "
-        "with specific tasks and a timeline."
+        f"Write an introduction line: 'Study Plan for {subject} to improve {goal}:'. "
+        f"Then generate a concise study plan for the subject '{subject}', where the student studies for {time} hours per day. "
+        f"Use bullet points for each week (e.g., '• Week 1') and indent sub-bullets for daily tasks (e.g., '    - Day 1-2: ...'). "
+        "Please leave an extra blank line between each week's section to clearly separate the weeks. "
+        "Keep the entire response concise and under 500 tokens, and add a concise summary and the end of the response. "
     )
 
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant that generates study plans."},
-                {"role": "user", "content": prompt}
+                {
+                    "role": "system",
+                    "content": "You are a helpful assistant that generates structured, concise study plans."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
             ],
             temperature=0.7,
-            max_tokens=300
+            max_tokens=500
         )
         generated_plan = response.choices[0].message.content.strip()
     except Exception as e:
