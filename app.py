@@ -22,14 +22,20 @@ def generate_study_plan():
     subject = data.get('subject')
     time = data.get('time')
     goal = data.get('goal')
+    duration_value = data.get('durationValue')
+    duration_unit = data.get('durationUnit')
 
-    # Updated prompt: explicitly instruct to leave an extra blank line between each week
+    # Updated prompt to:
+    # 1) Include total plan duration in the introduction
+    # 2) Instruct ChatGPT to use bullet points for weeks, sub-bullets for days
+    # 3) Indent day lines under each week, with a blank line between weeks
+    # 4) Keep the answer concise (<=500 tokens), no double asterisks, no Markdown
     prompt = (
-        f"Write an introduction line: 'Study Plan for {subject} to improve {goal}:'. "
-        f"Then generate a concise study plan for the subject '{subject}', where the student studies for {time} hours per day. "
-        f"Use bullet points for each week (e.g., '• Week 1') and indent sub-bullets for daily tasks (e.g., '    - Day 1-2: ...'). "
-        "Please leave an extra blank line between each week's section to clearly separate the weeks. "
-        "Keep the entire response concise and under 500 tokens, and add a concise summary and the end of the response. "
+        f"Write an introduction line: 'Study Plan for {subject} to improve {goal} over {duration_value} {duration_unit}, "
+        f"studying {time} hours per day:'.\n\n"
+        "Use bullet points for each week (e.g., '• Week 1'), and for each day under that week, use an indented sub-bullet (e.g., '    - Day 1-2: ...').\n"
+        "Leave exactly one blank line between each week’s section. Align and indent all text so it’s easy to read.\n\n"
+        "Do not use double asterisks or Markdown formatting. Keep the entire plan as concise as possible (up to 500 tokens)."
     )
 
     try:

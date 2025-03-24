@@ -24,14 +24,35 @@
         <label for="subject">Subject:</label>
         <input type="text" id="subject" name="subject" placeholder="e.g., Mathematics" required>
       </div>
+
       <div class="form-group">
         <label for="time">Available Hours per Day:</label>
         <input type="number" id="time" name="time" placeholder="e.g., 2" required>
       </div>
+
+      <!-- New: Plan Duration Value -->
+      <div class="form-group">
+        <label for="durationValue">Plan Duration:</label>
+        <input type="number" id="durationValue" name="durationValue" placeholder="e.g., 4" required>
+      </div>
+
+      <!-- New: Plan Duration Unit -->
+      <div class="form-group">
+        <label for="durationUnit">Duration Unit:</label>
+        <select id="durationUnit" name="durationUnit" required>
+          <option value="" disabled selected>Select Unit</option>
+          <option value="days">Days</option>
+          <option value="weeks">Weeks</option>
+          <option value="months">Months</option>
+          <option value="years">Years</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <label for="goal">Learning Goal:</label>
         <input type="text" id="goal" name="goal" placeholder="e.g., Improve problem-solving skills">
       </div>
+
       <button type="submit">Generate Study Plan</button>
     </form>
 

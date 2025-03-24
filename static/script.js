@@ -63,6 +63,13 @@ function handleFormSubmit(event) {
   const subject = document.getElementById('subject').value;
   const time = document.getElementById('time').value;
   const goal = document.getElementById('goal').value;
+  const durationValue = document.getElementById('durationValue').value;
+  let durationUnit = document.getElementById('durationUnit').value;
+
+  // Dynamically adjust the duration unit: if the user enters 1, remove the trailing "s"
+  if (parseInt(durationValue) === 1 && durationUnit.toLowerCase().endsWith("s")) {
+    durationUnit = durationUnit.slice(0, -1);
+  }
 
   // Elements for feedback
   const spinner = document.getElementById('loadingSpinner');
@@ -71,16 +78,16 @@ function handleFormSubmit(event) {
   const planResultDiv = document.getElementById('studyPlanResult');
 
   // Reset/hide elements before making the request
-  planResultDiv.innerHTML = '';        // Clear old results
-  downloadBtn.style.display = 'none';  // Hide the PDF button
-  modal.style.display = 'none';        // Ensure modal is hidden initially
-  spinner.classList.remove('hidden');  // Show the spinner
+  planResultDiv.innerHTML = '';
+  downloadBtn.style.display = 'none';
+  modal.style.display = 'none';
+  spinner.classList.remove('hidden');
 
-  // Make the fetch request
+  // Make the fetch request including the duration values
   fetch('/generateStudyPlan', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ subject, time, goal })
+    body: JSON.stringify({ subject, time, goal, durationValue, durationUnit })
   })
   .then(response => {
     if (!response.ok) {
@@ -89,21 +96,30 @@ function handleFormSubmit(event) {
     return response.json();
   })
   .then(data => {
-    // Hide the spinner once the request completes successfully
+    // Hide spinner
     spinner.classList.add('hidden');
-  
-    // Insert the generated plan into the planResultDiv
-    planResultDiv.innerText = data.plan;  // Using innerText preserves line breaks from pre-wrap
-  
-    // Show the modal containing the study plan
+
+    // 1) Grab the plan text from server
+    let plan = data.plan;
+
+    // 2) Remove double asterisks
+    plan = plan.replace(/\*\*/g, '');
+
+    // 3) Insert a bullet for lines that begin with 'Week' or 'Day'
+    plan = plan.replace(/^Week\s+(\d+)/gm, '• Week $1');
+    plan = plan.replace(/^Day\s+(\d+)/gm, '    - Day $1:');  // Added a colon for clarity
+
+    // 4) Display the cleaned text in the modal
+    planResultDiv.innerText = plan;
+
+    // Show modal & PDF button
     modal.style.display = 'block';
-  
-    // Show the PDF download button
     downloadBtn.style.display = 'block';
   })
   .catch(error => {
     spinner.classList.add('hidden');
     console.error('Error:', error);
+
     planResultDiv.innerHTML = `<p style="color: #ff4444; font-weight: bold;">
       Error generating study plan. Please try again later.
     </p>`;
