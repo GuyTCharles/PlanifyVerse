@@ -152,6 +152,14 @@ body.dark .toggleText {
         padding: 0.5rem;
     }
 
+    .welcome-text1 {
+        font-size: 1.8rem;      
+    } 
+
+    .welcome-text2 {
+        font-size: 1.3rem;
+    }
+
     footer {
         padding: 0.8rem !important;
     }
