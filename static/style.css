@@ -65,8 +65,24 @@ main {
     padding: 1rem;
 }
 
-.welcome-text {
-    font-size: 1.5rem;
+.welcome-text1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(90deg, #007acc, #00d4ff);
+    -webkit-background-clip: text;  /* WebKit-specific property for gradient text */
+    background-clip: text; /* Standard property (not fully supported in all browsers yet) */
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+    /* Subtle text shadow for readability */
+    letter-spacing: 1px;
+    margin: 1.2rem auto;
+    margin-bottom: -0.5rem;
+}
+
+.welcome-text2 {
+    font-size: 1.4rem;
     font-weight: bold;
     text-align: center;
     background: linear-gradient(90deg, #007acc, #00d4ff);
@@ -78,7 +94,7 @@ main {
     /* Subtle text shadow for readability */
     letter-spacing: 1px;
     margin: 1rem auto;
-    margin-bottom: 1.8rem;
+    margin-bottom: 2rem;
 }
 
 /* Fade-in Animation */
@@ -203,8 +219,6 @@ body.dark .toggleText {
 .hidden {
     display: none !important;
 }
-
-
 
 /* Creative Footer Styles (Mirroring the Header) */
 footer {
