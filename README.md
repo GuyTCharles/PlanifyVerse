@@ -35,8 +35,7 @@ PlanifyVerse is an AI-powered study plan generator that helps you quickly create
 ## Deployment
 ###     Deploy on Heroku
 ####	Ensure Your Project is Prepared:
-	•	Verify that your Procfile (with web: gunicorn app:app --bind 0.0.0.0:$PORT),
-        and requirements.txt are in the project root.
+	Verify that your Procfile (with web: gunicorn app:app --bind 0.0.0.0:$PORT), and requirements.txt are in the project root.
 ## Acknowledgments
 	•	OpenAI for the GPT-3.5 Turbo model.
 	•	jsPDF for PDF generation.
