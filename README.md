@@ -25,9 +25,7 @@ PlanifyVerse is an AI-powered study plan generator that helps you quickly create
 	•	Git
 ## Usage
 ###	1.	Enter Your Information:
-	•	Fill the form: Provide subject, available study hours, plan duration, and learning goal.
-	•	Generate Plan: Click the “Generate Study Plan” button to view the plan in a modal.
-	•	Download PDF: Click “Download PDF” to save the plan.
+	Provide subject, available study hours, plan duration, and learning goal.
 ###	2.	Generate the Plan:
     Click “Generate Study Plan” to receive your AI-generated study plan displayed in a modal.
 ###	3.	Download as PDF:
@@ -36,8 +34,9 @@ PlanifyVerse is an AI-powered study plan generator that helps you quickly create
     Switch between light and dark mode using the theme toggle in the header.
 ## Deployment
 ###     Deploy on Heroku
-	1.	Ensure Your Project is Prepared:
-	•	Verify that your Procfile (with web: gunicorn app:app --bind 0.0.0.0:$PORT) and requirements.txt are in the project root.
+####	Ensure Your Project is Prepared:
+	•	Verify that your Procfile (with web: gunicorn app:app --bind 0.0.0.0:$PORT),
+        and requirements.txt are in the project root.
 ## Acknowledgments
 	•	OpenAI for the GPT-3.5 Turbo model.
 	•	jsPDF for PDF generation.
