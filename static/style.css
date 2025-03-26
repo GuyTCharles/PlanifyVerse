@@ -263,17 +263,24 @@ body.dark #studyPlanResult {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Scrolling if content is tall */
-    background-color: rgba(0,0,0,0.5); /* Black with opacity */
+    overflow: auto; /* Enable scrolling if content is tall */
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+}
+
+/* When modal is shown, center it using Flexbox */
+.modal.show {
+    display: flex;
+    align-items: center;  /* Vertical centering */
+    justify-content: center; /* Horizontal centering */
 }
 
 .modal-content {
     background-color: #ffffff;
-    margin: 5% auto;
+    margin: 20px; /* Provides some spacing on smaller screens */
     padding: 2rem;
     border-radius: 8px;
-    width: 80%;
-    max-width: 700px;
+    width: 85%;
+    max-width: 800px;
     position: relative;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     animation: fadeIn 0.3s ease;
@@ -303,6 +310,27 @@ body.dark .modal-content {
 .close:focus {
     color: #000;
     text-decoration: none;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        padding: 1.5rem; /* Slightly less padding on small screens */
+    }
+    
+    /* Adjust font size within modal content for better readability */
+    .modal-content .plan-result {
+        font-size: 0.9rem;
+    }
+    
+    /* Adjust the close button size/position for smaller screens */
+    .close {
+        font-size: 24px;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
 }
 
 /* Download PDF Button */

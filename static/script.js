@@ -42,13 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close modal when the close button is clicked
   closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
+    modal.classList.remove('show');
   });
 
   // Close modal when clicking outside the modal content
   window.addEventListener('click', (event) => {
     if (event.target === modal) {
-      modal.style.display = 'none';
+      modal.classList.remove('show');
     }
   });
 });
@@ -80,7 +80,7 @@ function handleFormSubmit(event) {
   // Reset/hide elements before making the request
   planResultDiv.innerHTML = '';
   downloadBtn.style.display = 'none';
-  modal.style.display = 'none';
+  modal.classList.remove('show');
   spinner.classList.remove('hidden');
 
   // Make the fetch request including the duration values
@@ -96,34 +96,33 @@ function handleFormSubmit(event) {
     return response.json();
   })
   .then(data => {
-    // Hide spinner
     spinner.classList.add('hidden');
 
-    // 1) Grab the plan text from server
+    // Grab the plan text from the server
     let plan = data.plan;
+    console.log("Plan from server:", plan); // Check in console for real \n
 
-    // 2) Remove double asterisks
+    // Remove any double asterisks
     plan = plan.replace(/\*\*/g, '');
 
-    // 3) Insert a bullet for lines that begin with 'Week' or 'Day'
+    // Insert a bullet for lines that begin with "Week" or "Day"
     plan = plan.replace(/^Week\s+(\d+)/gm, '• Week $1');
-    plan = plan.replace(/^Day\s+(\d+)/gm, '    - Day $1:');  // Added a colon for clarity
+    plan = plan.replace(/^Day\s+(\d+)/gm, '    - Day $1:');
 
-    // 4) Display the cleaned text in the modal
-    planResultDiv.innerText = plan;
+    // Use textContent to preserve all line breaks and spacing
+    planResultDiv.textContent = plan;
 
-    // Show modal & PDF button
-    modal.style.display = 'block';
+    // Show the modal and the PDF download button
+    modal.classList.add('show');
     downloadBtn.style.display = 'block';
   })
   .catch(error => {
     spinner.classList.add('hidden');
     console.error('Error:', error);
-
     planResultDiv.innerHTML = `<p style="color: #ff4444; font-weight: bold;">
       Error generating study plan. Please try again later.
     </p>`;
-    modal.style.display = 'block';
+    modal.classList.add('show');
   });
 }
 
@@ -133,16 +132,50 @@ function handleFormSubmit(event) {
 function handleDownloadPdf() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'pt', format: 'letter' });
-  
-  // Retrieve text from the studyPlanResult
-  const planText = document.getElementById('studyPlanResult').innerText;
-  
-  // Wrap the text so it fits within a 500pt width
-  const lines = doc.splitTextToSize(planText, 500);
-  
-  // Add the text to the PDF starting at x=50, y=50
-  doc.text(lines, 50, 50);
-  
-  // Save the PDF file
+
+  // 1) Get the text from your modal (with line breaks)
+  const planText = document.getElementById('studyPlanResult').textContent;
+  const lines = planText.split('\n');
+
+  // 2) Define fonts and margins
+  doc.setFont('Courier', 'normal');  // Monospaced font helps preserve indentation
+  doc.setFontSize(12);
+
+  const marginLeft = 30;   
+  const marginRight = 30;  
+  const marginTop = 30;    
+  const lineHeight = 20;   
+
+  // Calculate usable width: (page width) - left margin - right margin
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const usableWidth = pageWidth - marginLeft - marginRight;
+
+  let yPos = marginTop;
+
+  lines.forEach(originalLine => {
+    // 3) Detect leading spaces in the line
+    // e.g., "    - Day 1-2: ..." => leadingSpaces = "    "
+    const match = originalLine.match(/^(\s*)/);
+    const leadingSpaces = match ? match[1] : "";
+    
+    // The actual text to wrap (excluding leading spaces)
+    const textWithoutSpaces = originalLine.slice(leadingSpaces.length);
+
+    // 4) Use splitTextToSize for the text after the indentation
+    const wrappedLines = doc.splitTextToSize(textWithoutSpaces, usableWidth);
+
+    // 5) Print each wrapped segment, reapplying the leading spaces
+    wrappedLines.forEach((wrappedLine, index) => {
+      // For the first wrapped segment, use the original leading spaces
+      // For subsequent segments, reapply the same number of spaces
+      const lineToPrint = (index === 0) 
+        ? leadingSpaces + wrappedLine 
+        : " ".repeat(leadingSpaces.length) + wrappedLine;
+
+      doc.text(lineToPrint, marginLeft, yPos);
+      yPos += lineHeight;
+    });
+  });
+
   doc.save('study-plan.pdf');
 }
