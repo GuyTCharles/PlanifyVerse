@@ -10,23 +10,23 @@ PlanifyVerse is an AI-powered study plan generator that helps you quickly create
     Users can specify plan duration in days, weeks, months, or years.
 
 ###     User-Friendly Interface:
-•	Clean and modern design with light and dark themes.
-•	Modal display for study plans for a focused view.
-•	Downloadable PDF version of the generated study plan.
+	•	Clean and modern design with light and dark themes.
+	•	Modal display for study plans for a focused view.
+	•	Downloadable PDF version of the generated study plan.
 
 ###     Responsive Design:
     Optimized for both desktop and mobile devices.
 
 ## Technologies
-•	Backend: Python, Flask
-•	Frontend: HTML, CSS, JavaScript, jsPDF (for PDF generation)
-•	AI Integration: OpenAI GPT-3.5 Turbo
-•	Deployment: Heroku and Render
+	•	Backend: Python, Flask
+	•	Frontend: HTML, CSS, JavaScript, jsPDF (for PDF generation)
+	•	AI Integration: OpenAI GPT-3.5 Turbo
+	•	Deployment: Heroku and Render
 
 ## Installation
 ###     Prerequisites
-•	Python 3.8+
-•	Git
+	•	Python 3.8+
+	•	Git
 
 ## Usage
 ###	1.	Enter Your Information:
@@ -45,6 +45,6 @@ PlanifyVerse is an AI-powered study plan generator that helps you quickly create
     and requirements.txt are in the project root.
 
 ## Acknowledgments
-•	OpenAI for the GPT-3.5 Turbo model.
-•	jsPDF for PDF generation.
-•	Heroku and Render for deployment.
+	•	OpenAI for the GPT-3.5 Turbo model.
+	•	jsPDF for PDF generation.
+	•	Heroku and Render for deployment.
