@@ -30,13 +30,13 @@ PlanifyVerse is an AI-powered study plan generator that helps you quickly create
 
 ## Usage
 ###	1.	Enter Your Information:
-		Provide subject, available study hours, plan duration, and learning goal.
+	Provide subject, available study hours, plan duration, and learning goal.
 ###	2.	Generate the Plan:
-    	Click “Generate Study Plan” to receive your AI-generated study plan displayed in a modal.
+    Click “Generate Study Plan” to receive your AI-generated study plan displayed in a modal.
 ###	3.	Download as PDF:
-    	Use the “Download PDF” button to export your study plan to a well-formatted PDF.
+    Use the “Download PDF” button to export your study plan to a well-formatted PDF.
 ###	4.	Toggle Themes:
-   	 	Switch between light and dark mode using the theme toggle in the header.
+   	Switch between light and dark mode using the theme toggle in the header.
 
 ## Deployment
 ###     Deploy on Heroku
