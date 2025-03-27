@@ -5,24 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PlanifyVerse – AI-Powered Study Plans</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link rel="icon" href="{{ url_for('static', filename='images/logo1.png') }}">
+  <link rel="icon" href="{{ url_for('static', filename='logo1.png') }}">
 
    <!-- Inline styles for logo swapping in dark mode -->
    <style>
     /* Light Mode Logo */
     body:not(.dark) #siteLogo {
-      content: url('{{ url_for("static", filename="images/logo.png") }}');
+      content: url('{{ url_for("static", filename="logo.png") }}');
     }
-
     /* Dark Mode Logo */
     body.dark #siteLogo {
-      content: url('{{ url_for("static", filename="images/logo-dark.png") }}');
+      content: url('{{ url_for("static", filename="logo-dark.png") }}');
     }
   </style>
 </head>
 <body>
   <header>
-    <img id="siteLogo" src="{{ url_for('static', filename='images/logo.png') }}" alt="PlanifyVerse Logo" class="logo">
+    <img id="siteLogo" src="{{ url_for('static', filename='logo.png') }}" alt="PlanifyVerse Logo" class="logo">
     <div class="toggleClass" onclick="toggleTheme()">
       <div class="toggleCircle"></div>
       <span class="toggleText" id="toggleText">Light Mode</span>
