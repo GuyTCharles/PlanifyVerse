@@ -33,9 +33,9 @@ def generate_study_plan():
         f"Write an introduction line: 'Study Plan for {subject} to improve {goal} over {duration_value} {duration_unit}, "
         f"studying {time} hours per day:'.\n\n"
         "Use bullet points for each week (e.g., '• Week 1'), and for each day under that week, use an indented sub-bullet (e.g., '    - Day 1-2: ...').\n"
-        "Leave a blank line between each week. Use actual line breaks (\\n) so the text is separated into multiple lines.\n\n" 
-        "Align and indent all text so it’s easy to read.\n\n"
-        "Do not use double asterisks or Markdown formatting. Keep the entire plan as concise as possible (up to 500 tokens for concise or 1000 tokens for detailed plans).\n\n"
+        "Leave a blank line between each week. Use actual line breaks (\\n) so the text is separated into multiple lines.\n\n"
+        "Align and indent all text so it’s easy to read. Do not use double asterisks or Markdown formatting.\n\n"
+        "Generate a concise study plan (about 500 tokens) if Plan Type is 'concise', or a detailed study plan (about 1000 tokens) if Plan Type is 'detailed'.\n\n"
         "At the end of the plan, provide additional suggestions or tips to help improve study efficiency."
     )
 
