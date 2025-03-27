@@ -43,12 +43,12 @@ body:not(.dark) main {
 
 /* Light Mode Logo */
 body:not(.dark) #siteLogo {
-    content: url('{{ url_for("static", filename="images/logo.png") }}');
+    content: url('{{ url_for("static", filename="/images/logo.png") }}');
 }
 
 /* Dark Mode Logo */
 body.dark #siteLogo {
-    content: url('{{ url_for("static", filename="images/logo-dark.png") }}');
+    content: url('{{ url_for("static", filename="/images/logo-dark.png") }}');
 }
 
 /* Creative Header Styles (Default Light Mode) */
@@ -69,13 +69,13 @@ body.dark header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-header h1 {
+/* header h1 {
     font-size: 1.7rem;
     font-weight: bold;
     letter-spacing: 1px;
     text-transform: uppercase;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-}
+} */
 
 /* Main Content */
 main {
