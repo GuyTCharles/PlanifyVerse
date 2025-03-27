@@ -169,12 +169,12 @@ body.dark .toggleText {
         /* Adjust based on your design */
         margin-top: -22px;
         margin-bottom: -22px;
-        margin-left: -10px;
+        margin-left: -3px;
     }
 
-    /* Toggle Text */
     .toggleText {
         font-size: 0.85rem;
+        margin-right: 7px;
     }
 
     .welcome-text1 {
