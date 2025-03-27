@@ -43,13 +43,13 @@ body:not(.dark) main {
 
 /* Light Mode Logo */
 body:not(.dark) #siteLogo {
-    content: url('{{ url_for("static", filename="logo.png") }}');
-  }
-  
-  /* Dark Mode Logo */
-  body.dark #siteLogo {
-    content: url('{{ url_for("static", filename="logo-dark.png") }}');
-  }
+    content: url('{{ url_for("static", filename="images/logo.png") }}');
+}
+
+/* Dark Mode Logo */
+body.dark #siteLogo {
+    content: url('{{ url_for("static", filename="images/logo-dark.png") }}');
+}
 
 /* Creative Header Styles (Default Light Mode) */
 header {
