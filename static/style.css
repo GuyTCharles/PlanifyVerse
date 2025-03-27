@@ -41,16 +41,6 @@ body:not(.dark) main {
     margin-left: -18px;
 }
 
-/* Light Mode Logo */
-body:not(.dark) #siteLogo {
-    content: url('{{ url_for("static", filename="logo.png") }}');
-}
-
-/* Dark Mode Logo */
-body.dark #siteLogo {
-    content: url('{{ url_for("static", filename="logo-dark.png") }}');
-}
-
 /* Creative Header Styles (Default Light Mode) */
 header {
     display: flex;

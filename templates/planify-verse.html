@@ -6,6 +6,18 @@
   <title>PlanifyVerse – AI-Powered Study Plans</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='logo1.png') }}">
+
+   <!-- Inline styles for logo swapping in dark mode -->
+   <style>
+    /* Light Mode Logo */
+    body:not(.dark) #siteLogo {
+      content: url('{{ url_for("static", filename="logo.png") }}');
+    }
+    /* Dark Mode Logo */
+    body.dark #siteLogo {
+      content: url('{{ url_for("static", filename="logo-dark.png") }}');
+    }
+  </style>
 </head>
 <body>
   <header>
