@@ -65,6 +65,7 @@ function handleFormSubmit(event) {
   const goal = document.getElementById('goal').value;
   const durationValue = document.getElementById('durationValue').value;
   let durationUnit = document.getElementById('durationUnit').value;
+  const planType = document.getElementById('planType').value; // New plan type field
 
   // Dynamically adjust the duration unit: if the user enters 1, remove the trailing "s"
   if (parseInt(durationValue) === 1 && durationUnit.toLowerCase().endsWith("s")) {
@@ -83,11 +84,11 @@ function handleFormSubmit(event) {
   modal.classList.remove('show');
   spinner.classList.remove('hidden');
 
-  // Make the fetch request including the duration values
+  // Make the fetch request including the new planType value
   fetch('/generateStudyPlan', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ subject, time, goal, durationValue, durationUnit })
+    body: JSON.stringify({ subject, time, goal, durationValue, durationUnit, planType })
   })
   .then(response => {
     if (!response.ok) {
@@ -98,21 +99,20 @@ function handleFormSubmit(event) {
   .then(data => {
     spinner.classList.add('hidden');
 
-    // Grab the plan text from the server
+    // Process the received plan text
     let plan = data.plan;
-    console.log("Plan from server:", plan); // Check in console for real \n
+    console.log("Plan from server:", plan); // Check for real line breaks
 
     // Remove any double asterisks
     plan = plan.replace(/\*\*/g, '');
-
     // Insert a bullet for lines that begin with "Week" or "Day"
     plan = plan.replace(/^Week\s+(\d+)/gm, '• Week $1');
     plan = plan.replace(/^Day\s+(\d+)/gm, '    - Day $1:');
 
-    // Use textContent to preserve all line breaks and spacing
+    // Preserve line breaks and spacing
     planResultDiv.textContent = plan;
 
-    // Show the modal and the PDF download button
+    // Show the modal and PDF download button
     modal.classList.add('show');
     downloadBtn.style.display = 'block';
   })

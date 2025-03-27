@@ -179,10 +179,12 @@ body.dark .toggleText {
 
     .welcome-text1 {
         font-size: 1.8rem;
+        margin-top: auto;
     }
 
     .welcome-text2 {
         font-size: 1.3rem;
+        margin-bottom: auto;
     }
 
     footer {

@@ -32,43 +32,52 @@
     <p class="welcome-text1">Welcome to PlanifyVerse</p>
     <p class="welcome-text2">Your Hub for AI-Powered Study Plans</p>
     
-    <!-- Study Plan Form -->
-    <form id="studyPlanForm" class="study-plan-form">
-      <div class="form-group">
+   <!-- Study Plan Form -->
+   <form id="studyPlanForm" class="study-plan-form">
+    <div class="form-group">
         <label for="subject">Subject:</label>
         <input type="text" id="subject" name="subject" placeholder="e.g., Mathematics" required>
-      </div>
+    </div>
 
-      <div class="form-group">
+    <div class="form-group">
         <label for="time">Available Hours per Day:</label>
         <input type="number" id="time" name="time" placeholder="e.g., 2" required>
-      </div>
+    </div>
 
-      <!-- New: Plan Duration Value -->
-      <div class="form-group">
+    <!-- New: Plan Duration Value -->
+    <div class="form-group">
         <label for="durationValue">Plan Duration:</label>
         <input type="number" id="durationValue" name="durationValue" placeholder="e.g., 4" required>
-      </div>
+    </div>
 
-      <!-- New: Plan Duration Unit -->
-      <div class="form-group">
+    <!-- New: Plan Duration Unit -->
+    <div class="form-group">
         <label for="durationUnit">Duration Unit:</label>
         <select id="durationUnit" name="durationUnit" required>
-          <option value="" disabled selected>Select Unit</option>
-          <option value="days">Days</option>
-          <option value="weeks">Weeks</option>
-          <option value="months">Months</option>
-          <option value="years">Years</option>
+            <option value="" disabled selected>Select Unit</option>
+            <option value="days">Days</option>
+            <option value="weeks">Weeks</option>
+            <option value="months">Months</option>
+            <option value="years">Years</option>
         </select>
-      </div>
+    </div>
 
-      <div class="form-group">
+    <div class="form-group">
         <label for="goal">Learning Goal:</label>
         <input type="text" id="goal" name="goal" placeholder="e.g., Improve problem-solving skills">
-      </div>
+    </div>
 
-      <button type="submit">Generate Study Plan</button>
-    </form>
+    <!--Plan Type Option -->
+    <div class="form-group">
+        <label for="planType">Plan Type:</label>
+        <select id="planType" name="planType" required>
+            <option value="concise" selected>Concise</option>
+            <option value="detailed">Detailed</option>
+        </select>
+    </div>
+
+    <button type="submit">Generate Study Plan</button>
+</form>
 
     <!-- Loading Spinner -->
     <div id="loadingSpinner" class="spinner hidden"></div>
