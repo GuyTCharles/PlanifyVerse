@@ -44,12 +44,12 @@ body:not(.dark) main {
 /* Light Mode Logo */
 body:not(.dark) #siteLogo {
     content: url('{{ url_for("static", filename="logo.png") }}');
-  }
-  
-  /* Dark Mode Logo */
-  body.dark #siteLogo {
+}
+
+/* Dark Mode Logo */
+body.dark #siteLogo {
     content: url('{{ url_for("static", filename="logo-dark.png") }}');
-  }
+}
 
 /* Creative Header Styles (Default Light Mode) */
 header {
