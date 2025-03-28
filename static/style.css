@@ -37,7 +37,7 @@ body:not(.dark) main {
     max-height: 120px;
     /* Adjust based on your design */
     margin-top: -30px;
-    margin-bottom: -30px;
+    margin-bottom: -35px;
     margin-left: -18px;
 }
 
@@ -49,23 +49,23 @@ header {
     align-items: center;
     padding: 1rem 2rem;
     background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.25);
 }
 
 body.dark header {
     background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
-    border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.25);
 }
 
-/* header h1 {
+/*
+header h1 {
     font-size: 1.7rem;
     font-weight: bold;
     letter-spacing: 1px;
     text-transform: uppercase;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-} */
+}
+*/
 
 /* Main Content */
 main {
@@ -159,7 +159,7 @@ body.dark .toggleText {
 }
 
 /* MEDIA QUERY: For screens 450px wide or smaller */
-@media (max-width: 450px) {
+@media (max-width: 469px) {
     header {
         padding: 0.5rem;
     }
@@ -168,10 +168,11 @@ body.dark .toggleText {
         max-height: 100px;
         /* Adjust based on your design */
         margin-top: -22px;
-        margin-bottom: -22px;
+        margin-bottom: -24px;
         margin-left: -3px;
     }
 
+    /* Toggle Text */
     .toggleText {
         font-size: 0.85rem;
         margin-right: 7px;
@@ -188,7 +189,8 @@ body.dark .toggleText {
     }
 
     footer {
-        padding: 0.8rem !important;
+        padding: 0.9rem !important;
+        font-size: 0.85rem;
     }
 }
 
@@ -260,14 +262,12 @@ footer {
     text-align: center;
     padding: 1rem 2rem;
     background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
-    border-top: 0.5px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    border-top: 0.5px solid rgba(0, 0, 0, 0.25);
 }
 
 body.dark footer {
     background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
-    border-top: 0.5px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
+    border-top: 0.5px solid rgba(255, 255, 255, 0.25);
 }
 
 /* Plan Result & PDF Button (for the modal) */
