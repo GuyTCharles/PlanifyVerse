@@ -133,45 +133,46 @@ function handleDownloadPdf() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'pt', format: 'letter' });
 
-  // 1) Get the text from your modal (with line breaks)
+  // Retrieve text from the modal, preserving line breaks
   const planText = document.getElementById('studyPlanResult').textContent;
   const lines = planText.split('\n');
 
-  // 2) Define fonts and margins
-  doc.setFont('Courier', 'normal');  // Monospaced font helps preserve indentation
+  // Set up fonts and margins
+  doc.setFont('Courier', 'normal');  // Monospaced font for consistent indentation
   doc.setFontSize(12);
 
-  const marginLeft = 30;   
-  const marginRight = 30;  
-  const marginTop = 30;    
-  const lineHeight = 20;   
+  const marginLeft = 30;
+  const marginRight = 30;
+  const marginTop = 30;
+  const lineHeight = 20;
 
-  // Calculate usable width: (page width) - left margin - right margin
+  // Calculate usable width and page height
   const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
   const usableWidth = pageWidth - marginLeft - marginRight;
 
   let yPos = marginTop;
 
   lines.forEach(originalLine => {
-    // 3) Detect leading spaces in the line
-    // e.g., "    - Day 1-2: ..." => leadingSpaces = "    "
+    // Detect leading spaces for indentation
     const match = originalLine.match(/^(\s*)/);
     const leadingSpaces = match ? match[1] : "";
-    
-    // The actual text to wrap (excluding leading spaces)
     const textWithoutSpaces = originalLine.slice(leadingSpaces.length);
 
-    // 4) Use splitTextToSize for the text after the indentation
+    // Wrap text for the remainder of the line
     const wrappedLines = doc.splitTextToSize(textWithoutSpaces, usableWidth);
 
-    // 5) Print each wrapped segment, reapplying the leading spaces
     wrappedLines.forEach((wrappedLine, index) => {
-      // For the first wrapped segment, use the original leading spaces
-      // For subsequent segments, reapply the same number of spaces
       const lineToPrint = (index === 0) 
         ? leadingSpaces + wrappedLine 
         : " ".repeat(leadingSpaces.length) + wrappedLine;
-
+      
+      // If the new line exceeds the page height, add a new page and reset yPos
+      if (yPos + lineHeight > pageHeight - marginTop) {
+        doc.addPage();
+        yPos = marginTop;
+      }
+      
       doc.text(lineToPrint, marginLeft, yPos);
       yPos += lineHeight;
     });
