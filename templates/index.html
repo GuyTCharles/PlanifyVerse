@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PlanifyVerse | AI Study Planner</title>
+    <meta name="description" content="Create practical AI-powered study plans with a professional and responsive planning experience.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='images/web-icon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a href="/" class="brand" aria-label="PlanifyVerse Home">
+                <img
+                    id="siteLogo"
+                    class="logo"
+                    src="{{ url_for('static', filename='images/logo.png') }}"
+                    data-logo-light="{{ url_for('static', filename='images/logo.png') }}"
+                    data-logo-dark="{{ url_for('static', filename='images/logo.png') }}"
+                    alt="PlanifyVerse logo"
+                >
+                <span class="brand-text">PlanifyVerse</span>
+            </a>
+            <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme">
+                <span class="theme-toggle__dot" aria-hidden="true"></span>
+                <span id="themeToggleText">Dark Theme</span>
+            </button>
+        </header>
+
+        <main class="main-layout">
+            <section class="card hero-panel">
+                <p class="eyebrow">AI Study Planning</p>
+                <h1 class="hero-title">Build a study system that fits your real schedule.</h1>
+                <p class="hero-copy">
+                    PlanifyVerse generates practical day-by-day plans with clear milestones, realistic pacing, and revision checkpoints.
+                </p>
+                <ul class="hero-points">
+                    <li>Personalized around your available hours</li>
+                    <li>Adaptive plan depth and pacing controls</li>
+                    <li>Clean output you can copy or export instantly</li>
+                </ul>
+                <div class="metrics">
+                    <article>
+                        <p class="metric-value">2-3 min</p>
+                        <p class="metric-label">Setup time</p>
+                    </article>
+                    <article>
+                        <p class="metric-value">100%</p>
+                        <p class="metric-label">Responsive UI</p>
+                    </article>
+                    <article>
+                        <p class="metric-value">PDF</p>
+                        <p class="metric-label">Export-ready</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="card planner-panel">
+                <h2>Create Your Plan</h2>
+                <form id="studyPlanForm" novalidate>
+                    <div class="form-grid">
+                        <div class="field-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="e.g., Data Structures" minlength="2" maxlength="80" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="time">Hours per day</label>
+                            <input type="number" id="time" name="time" placeholder="e.g., 2" min="0.5" max="16" step="0.5" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="durationValue">Duration</label>
+                            <input type="number" id="durationValue" name="durationValue" placeholder="e.g., 8" min="1" max="365" step="1" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="durationUnit">Duration unit</label>
+                            <select id="durationUnit" name="durationUnit" required>
+                                <option value="weeks" selected>Weeks</option>
+                                <option value="days">Days</option>
+                                <option value="months">Months</option>
+                                <option value="years">Years</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group field-group--wide">
+                            <label for="goal">Learning goal</label>
+                            <textarea id="goal" name="goal" rows="3" maxlength="240" placeholder="e.g., Ace my final exam with strong problem-solving speed"></textarea>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="planType">Plan depth</label>
+                            <select id="planType" name="planType">
+                                <option value="concise" selected>Concise</option>
+                                <option value="detailed">Detailed</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="pace">Pace</label>
+                            <select id="pace" name="pace">
+                                <option value="steady" selected>Steady</option>
+                                <option value="accelerated">Accelerated</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group field-group--wide">
+                            <div class="options-row">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="includeRevision" name="includeRevision" checked>
+                                    <span>Include revision checkpoints</span>
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" id="weekendSessions" name="weekendSessions">
+                                    <span>Allow weekend study sessions</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="studySummary" class="study-summary">Estimated workload: select your duration and hours.</p>
+
+                    <div class="form-actions">
+                        <button id="generateBtn" type="submit" class="primary-btn">Generate Study Plan</button>
+                        <button id="resetBtn" type="reset" class="secondary-btn">Reset</button>
+                    </div>
+
+                    <div id="loadingIndicator" class="loading hidden" aria-live="polite">
+                        <span class="loading-spinner" aria-hidden="true"></span>
+                        <span id="loadingText">Generating your plan...</span>
+                    </div>
+                    <p id="formStatus" class="status-message" role="status" aria-live="polite"></p>
+                </form>
+            </section>
+        </main>
+
+        <section class="card result-panel">
+            <div class="result-header">
+                <h2>Your Study Plan</h2>
+                <div class="result-actions">
+                    <button id="copyPlanBtn" class="ghost-btn" type="button" disabled>Copy</button>
+                    <button id="downloadPdfBtn" class="ghost-btn" type="button" disabled>Download PDF</button>
+                </div>
+            </div>
+            <p id="resultHint" class="empty-state">Your generated plan will appear here.</p>
+            <pre id="studyPlanResult" class="plan-result"></pre>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; <span id="currentYear"></span> PlanifyVerse. Learn with intention.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+</html>
